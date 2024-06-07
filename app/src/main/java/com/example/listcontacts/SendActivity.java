@@ -23,6 +23,7 @@ public class SendActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Création de notre vue avec le switch de autoReply
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send);
 
@@ -31,13 +32,14 @@ public class SendActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         autoReplySwitch.setChecked(sharedPreferences.getBoolean(AUTO_REPLY_KEY, false));
-
+        // Gère le changement d'état du switch, enregistre son état
         autoReplySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(AUTO_REPLY_KEY, isChecked);
             editor.apply();
         });
 
+        // Gère le bouton de spam + vérifie les droits d'acces a la telephonie
         sendMessageButton.setOnClickListener(v -> {
             if (ContextCompat.checkSelfPermission(this,
                     android.Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED){
@@ -47,14 +49,15 @@ public class SendActivity extends AppCompatActivity {
                 } else {
                     sendMessagesToSelectedContacts();
                 }
+                // Message de retour a l'action de l'utilisateur
                 Toast.makeText(SendActivity.this, "Message envoyé aux contacts", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void sendMessagesToSelectedContacts() {
-        // Logique pour envoyer des messages aux contacts sélectionnés
-        // Supposons que vous ayez une liste de contacts sélectionnés avec leurs numéros de téléphone
+        // Envoi un message au contacts coché dans la page de chois des spams (inexistante)
+        // Data de test pour le cas
         String[] selectedContacts = {"1234567890", "0987654321"};
         String message = "Hello, this is a test message";
 

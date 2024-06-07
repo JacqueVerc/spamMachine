@@ -47,7 +47,7 @@ public class ListActivity extends AppCompatActivity {
 
         RecyclerView rc_view = findViewById(R.id.recycler);
         rc_view.setLayoutManager(new LinearLayoutManager(this));
-
+        // On ajoute des cas de test
         contacts.add("John Doe");
         contacts.add("John Doel");
         contacts.add("John Dodo");
@@ -60,6 +60,7 @@ public class ListActivity extends AppCompatActivity {
             requestContactPermission();
         }
 
+        // Dans le cas ou l'on est sur un vrai téléphone
         // Requête
         ContentResolver resolver = getContentResolver();
         Uri uri = ContactsContract.Contacts.CONTENT_URI; // Provider natif Android pour les informations relatives aux contacts
@@ -79,6 +80,7 @@ public class ListActivity extends AppCompatActivity {
         saveCheckedContacts(adapter.getCheckedContact());
     }
 
+    // Enregistre nos contact cochés
     private void saveCheckedContacts(Set<String> checkedContacts) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
@@ -86,6 +88,7 @@ public class ListActivity extends AppCompatActivity {
         editor.apply();
     }
 
+    // Récupère nos contacts cochés du localStorage
     private Set<String> loadCheckedContacts() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         return preferences.getStringSet("checked_contacts", new HashSet<>());

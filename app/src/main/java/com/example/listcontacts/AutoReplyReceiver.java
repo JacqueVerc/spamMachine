@@ -21,7 +21,9 @@ public class AutoReplyReceiver extends BroadcastReceiver {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         boolean autoReply = sharedPreferences.getBoolean(AUTO_REPLY_KEY, false);
 
+        // Si le switch autoReply est true et un sms est recu, on répond
         if (autoReply && Objects.equals(intent.getAction(), "android.provider.Telephony.SMS_RECEIVED")) {
+            // Récupère les infos du message entrant et lui répond
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
                 Object[] pdus = (Object[]) bundle.get("pdus");
@@ -30,7 +32,6 @@ public class AutoReplyReceiver extends BroadcastReceiver {
                         SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) pdu);
                         String sender = smsMessage.getDisplayOriginatingAddress();
                         String messageBody = smsMessage.getMessageBody();
-                        // Automatically send a reply
                         SmsManager smsManager = SmsManager.getDefault();
                         smsManager.sendTextMessage(sender, null, "Auto-reply: " + messageBody, null, null);
                         Toast.makeText(context, "Auto-replied to: " + sender, Toast.LENGTH_SHORT).show();

@@ -20,6 +20,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         checkedContact = new HashSet<>();
     }
 
+    // Création de notre vue
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView contact;
         private final CheckBox contactCheckbox;
@@ -50,9 +51,9 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         String contact = contactDataset.get(pos);
         viewHolder.getTextView().setText(contact);
 
-        // Initialize the checkbox state
+        // Initialise notre checkbox
         viewHolder.getCheckbox().setChecked(checkedContact.contains(contact));
-
+        // Si on check un contact, on l'ajoute a la liste des contact cochés
         viewHolder.getCheckbox().setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 checkedContact.add(contact);
